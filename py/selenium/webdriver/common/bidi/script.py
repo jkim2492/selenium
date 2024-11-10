@@ -18,6 +18,7 @@
 import typing
 from dataclasses import dataclass
 
+from .bidi import BidiObject
 from .session import session_subscribe
 from .session import session_unsubscribe
 
@@ -108,3 +109,16 @@ class JavaScriptLogEntry:
             stacktrace=json["stackTrace"],
             type_=json["type"],
         )
+
+
+@dataclass
+class StackFrame(BidiObject):
+    columnNumber: int
+    functionName: str
+    lineNumber: int
+    url: str
+
+
+@dataclass
+class StackTrace(BidiObject):
+    callFrames: typing.Optional[typing.List[StackFrame]] = None
