@@ -21,7 +21,6 @@ from selenium.webdriver.common.bidi.network import UrlPatternString
 
 @pytest.mark.xfail_firefox
 @pytest.mark.xfail_safari
-@pytest.mark.xfail_edge
 async def test_request_handler(driver, pages):
 
     url1 = pages.url("simpleTest.html")
