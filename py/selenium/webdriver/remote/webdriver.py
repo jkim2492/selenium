@@ -1257,7 +1257,7 @@ class WebDriver(BaseWebDriver):
             self._start_bidi()
 
         if not self._network:
-            self._network = Network(self._websocket_connection, self)
+            self._network = Network(self._websocket_connection)
 
         return self._network
 

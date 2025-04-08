@@ -17,8 +17,6 @@
 from collections import defaultdict
 
 from selenium.webdriver.common.bidi import network
-from selenium.webdriver.common.bidi.browsing_context import Navigate
-from selenium.webdriver.common.bidi.browsing_context import NavigateParameters
 from selenium.webdriver.common.bidi.network import AddInterceptParameters
 from selenium.webdriver.common.bidi.network import BeforeRequestSent
 from selenium.webdriver.common.bidi.network import BeforeRequestSentParameters
@@ -28,19 +26,14 @@ from selenium.webdriver.common.bidi.session import session_unsubscribe
 
 
 class Network:
-    def __init__(self, conn, driver):
+    def __init__(self, conn):
         self.intercepts = defaultdict(lambda: {"event": None, "handlers": []})
         self.callback_ids = {}
-        self.driver = driver
         self.conn = conn
         self.bidi_network = network.Network(self.conn)
 
         self.remove_request_handler = self.remove_intercept
         self.clear_request_handlers = self.clear_intercepts
-
-    def get(self, url, wait="none"):
-        params = NavigateParameters(context=self.driver.current_window_handle, url=url, wait=wait)
-        self.conn.execute(Navigate(params).cmd())
 
     def add_handler(self, event, handler, urlPatterns=None):
         event_name = event.event_class
